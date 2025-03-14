@@ -1,23 +1,43 @@
-<?php
+    <?php
 
-use Illuminate\Support\Facades\Route;
+    use Illuminate\Support\Facades\Route;
+    use App\Models\Clothes;
 
-// ホームページ
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+    // メインページのルート - 全件取得、一件取得、ID指定取得を表示
+    Route::get('/', function () {
+        // TODO: 全件取得
+        $allClothes = [];
 
-// ページ1
-Route::get('/page1', function () {
-    return view('page1');
-})->name('page1');
+        // 最初の1件取得
+        $firstClothes = [];
 
-// ページ2
-Route::get('/page2', function () {
-    return view('page2');
-})->name('page2');
+        // デフォルトのID指定 (検索前は空にしておく)
+        $clothesById = null;
+        $searchId = null;
 
-// パラメータありルート
-Route::get('/user/{id}', function ($id) {
-    return view('user', ['id' => $id]);
-})->name('user.show');
+        return view('clothes', compact('allClothes', 'firstClothes', 'clothesById', 'searchId'));
+    });
+
+    // ID検索用のルート
+    Route::get('/search', function () {
+        // TODO: 全件取得
+        $allClothes  = [];
+
+        // TODO: 最初の1件取得
+        $firstClothes = [];
+
+        // ID指定取得
+        $searchId = request('id');
+        $clothesById = null;
+
+        if ($searchId) {
+            try {
+                // TODO:IDで検索したデータを取得
+                $clothesById = [];
+            } catch (\Exception $e) {
+                // 見つからない場合は null のまま
+            }
+        }
+
+        return view('clothes', compact('allClothes', 'firstClothes', 'clothesById', 'searchId'));
+    })->name('search');
